@@ -1,5 +1,5 @@
 {
-  "expo": "50.0.0",
+  "expo": "54.0.0",
   "name": "pi-app-frontend",
   "slug": "pi-app-frontend",
   "version": "1.0.0",
@@ -11,10 +11,12 @@
     "adaptiveIcon": {
       "foregroundImage": "./assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
-    }
+    },
+    "package": "com.piapp.workshop"
   },
   "ios": {
-    "supportsTabletMode": true
+    "supportsTabletMode": true,
+    "bundleIdentifier": "com.piapp.workshop"
   },
   "web": {
     "favicon": "./assets/favicon.png"
