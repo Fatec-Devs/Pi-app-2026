@@ -185,7 +185,7 @@ export interface CreateServiceOrderDTO {
    - `ORCAMENTO` → `APROVADO` → `EM_EXECUCAO` → `CONCLUIDO`
 7. Só iniciar execução após aprovação do orçamento.
 8. Registro de materiais + baixa de estoque deve ocorrer em transação atômica (MongoDB session/transaction); em falha, rollback completo da operação.
-9. Para MVP rápido: usar MongoDB em replica set (necessário para transaction). Se ambiente local sem replica set, aplicar compensação manual (reverter material da OS caso falhe baixa de estoque) até infraestrutura completa.
+9. Para MVP rápido: priorizar definição da estratégia já no setup (primeiros 2 dias): **(A)** MongoDB em replica set (necessário para transaction) ou **(B)** compensação manual como padrão inicial (reverter material da OS caso falhe baixa de estoque) e evoluir para transaction depois.
 
 ---
 
@@ -240,7 +240,8 @@ export interface CreateServiceOrderDTO {
 - Commits curtos e semânticos (`feat`, `fix`, `refactor`, `docs`)
 - DTOs para entrada e saída
 - Nunca acessar Mongo direto no Controller
-- Senhas sempre com hash seguro (`bcrypt`) + salt (`saltRounds` configurável via ambiente, recomendado mínimo 10-12), nunca armazenar senha em texto puro
+- Senhas sempre com hash seguro (`bcrypt`) + salt (`saltRounds` configurável via ambiente, recomendado iniciar com 10 no MVP; 10-12 como faixa segura), nunca armazenar senha em texto puro
+- Evitar `saltRounds` acima de 12 sem teste de carga, pois pode degradar tempo de login/cadastro
 - Erros padronizados (`code`, `message`, `details`)
 - Nomes consistentes:
   - `camelCase` (variáveis/funções)
@@ -286,7 +287,7 @@ Todos colaboram em testes manuais integrados e refinamento final.
 
 ## 16) Cronograma de 14 dias
 
-- **Dias 1-2:** setup projeto, auth base, estrutura de pastas
+- **Dias 1-2:** setup projeto (Dia 1: scaffolding + auth base + estrutura; Dia 2: banco e estratégia de consistência de estoque: replica set ou compensação manual)
 - **Dias 3-5:** clientes/veículos + telas base
 - **Dias 6-8:** ordens de serviço + fluxo de status
 - **Dias 9-10:** estoque + vínculo materiais/custos
