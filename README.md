@@ -183,10 +183,10 @@ export interface CreateServiceOrderDTO {
 5. OS só pode ser `CONCLUIDO` se `laborCost`/`partsCost`/`totalCost` estiverem registrados.
 6. Fluxo obrigatório de status:
    - `ORCAMENTO` → `APROVADO` → `EM_EXECUCAO` → `CONCLUIDO`
-7. Só iniciar execução após aprovação do orçamento.
-8. Estratégia de registro de materiais + baixa de estoque (definida nos Dias 1-2):
+7. Estratégia de registro de materiais + baixa de estoque (definida nos Dias 1-2):
    - **A (preferencial):** transação atômica com MongoDB replica set.
    - **B (MVP):** compensação manual (reverter material da OS se falhar baixa de estoque), com migração planejada para transaction.
+   - Escolha rápida: usar **A** se a equipe já dominar replica set no início; usar **B** para acelerar entrega do MVP com menor risco operacional.
 
 ---
 
@@ -241,7 +241,10 @@ export interface CreateServiceOrderDTO {
 - Commits curtos e semânticos (`feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `style`)
 - DTOs para entrada e saída
 - Nunca acessar Mongo direto no Controller
-- Hash de senha com `bcrypt` usando `BCRYPT_SALT_ROUNDS` (default: 10, faixa segura: 10-12); aplicar hash no **Auth Service** e nunca armazenar senha em texto puro (evitar >12 sem teste de carga)
+- Hash de senha com `bcrypt` usando `BCRYPT_SALT_ROUNDS` (default: 10, faixa segura: 10-12)
+- Aplicar hash no **Auth Service** (não em controller/repository)
+- Nunca armazenar senha em texto puro
+- Evitar `saltRounds` acima de 12 sem teste de carga
 - Erros padronizados (`code`, `message`, `details`)
 - Nomes consistentes:
   - `camelCase` (variáveis/funções)
