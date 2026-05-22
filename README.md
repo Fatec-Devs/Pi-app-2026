@@ -185,6 +185,7 @@ export interface CreateServiceOrderDTO {
    - `ORCAMENTO` → `APROVADO` → `EM_EXECUCAO` → `CONCLUIDO`
 7. Só iniciar execução após aprovação do orçamento.
 8. Registro de materiais + baixa de estoque deve ocorrer em transação atômica (MongoDB session/transaction); em falha, rollback completo da operação.
+9. Para MVP rápido: usar MongoDB em replica set (necessário para transaction). Se ambiente local sem replica set, aplicar compensação manual (reverter material da OS caso falhe baixa de estoque) até infraestrutura completa.
 
 ---
 
@@ -239,7 +240,7 @@ export interface CreateServiceOrderDTO {
 - Commits curtos e semânticos (`feat`, `fix`, `refactor`, `docs`)
 - DTOs para entrada e saída
 - Nunca acessar Mongo direto no Controller
-- Senhas sempre com hash seguro (`bcrypt`) + salt (`saltRounds` configurável via ambiente), nunca armazenar senha em texto puro
+- Senhas sempre com hash seguro (`bcrypt`) + salt (`saltRounds` configurável via ambiente, recomendado mínimo 10-12), nunca armazenar senha em texto puro
 - Erros padronizados (`code`, `message`, `details`)
 - Nomes consistentes:
   - `camelCase` (variáveis/funções)
