@@ -184,8 +184,7 @@ export interface CreateServiceOrderDTO {
 6. Fluxo obrigatório de status:
    - `ORCAMENTO` → `APROVADO` → `EM_EXECUCAO` → `CONCLUIDO`
 7. Só iniciar execução após aprovação do orçamento.
-8. Registro de materiais + baixa de estoque deve ocorrer em transação atômica (MongoDB session/transaction); em falha, rollback completo da operação.
-9. Para MVP rápido: priorizar definição da estratégia já no setup (primeiros 2 dias): **(A)** MongoDB em replica set (necessário para transaction) ou **(B)** compensação manual como padrão inicial (reverter material da OS caso falhe baixa de estoque) e evoluir para transaction depois.
+8. Registro de materiais + baixa de estoque deve seguir estratégia única definida no setup (primeiros 2 dias): **(A)** transação atômica com MongoDB replica set (preferencial) ou **(B)** compensação manual no MVP (reverter material da OS se falhar baixa de estoque), com migração planejada para transaction.
 
 ---
 
@@ -237,11 +236,12 @@ export interface CreateServiceOrderDTO {
 ## 12) Boas práticas e padronização
 
 - ESLint + Prettier + EditorConfig
-- Commits curtos e semânticos (`feat`, `fix`, `refactor`, `docs`)
+- Commits curtos e semânticos (`feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `style`)
 - DTOs para entrada e saída
 - Nunca acessar Mongo direto no Controller
 - Senhas sempre com hash seguro (`bcrypt`) + salt (`saltRounds` configurável via ambiente, recomendado iniciar com 10 no MVP; 10-12 como faixa segura), nunca armazenar senha em texto puro
 - Evitar `saltRounds` acima de 12 sem teste de carga, pois pode degradar tempo de login/cadastro
+- Definir `BCRYPT_SALT_ROUNDS` em variável de ambiente (fallback seguro no backend) e executar hash no **Auth Service**, não em controller/repository
 - Erros padronizados (`code`, `message`, `details`)
 - Nomes consistentes:
   - `camelCase` (variáveis/funções)
@@ -287,7 +287,7 @@ Todos colaboram em testes manuais integrados e refinamento final.
 
 ## 16) Cronograma de 14 dias
 
-- **Dias 1-2:** setup projeto (Dia 1: scaffolding + auth base + estrutura; Dia 2: banco e estratégia de consistência de estoque: replica set ou compensação manual)
+- **Dias 1-2:** setup projeto (Dia 1: configuração inicial + auth base + estrutura; Dia 2: banco e estratégia de consistência de estoque: replica set ou compensação manual)
 - **Dias 3-5:** clientes/veículos + telas base
 - **Dias 6-8:** ordens de serviço + fluxo de status
 - **Dias 9-10:** estoque + vínculo materiais/custos
