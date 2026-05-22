@@ -1,4 +1,4 @@
-# Pi-app-2026 — Arquitetura Base (MVP em 14 dias)
+# Pi-app-2026 — Arquitetura Base 
 
 ## 1) Visão geral
 Sistema mobile para gestão de oficina automotiva com:
@@ -6,7 +6,7 @@ Sistema mobile para gestão de oficina automotiva com:
 - **Backend:** Node.js + Express + TypeScript + MongoDB/Mongoose
 - **Auth:** JWT (access token)
 
-Objetivo: arquitetura simples, profissional, escalável e rápida para equipe acadêmica de 5 pessoas em 14 dias.
+Objetivo: arquitetura simples, profissional, escalável e rápida para equipe acadêmica.
 
 ---
 
@@ -287,18 +287,6 @@ export interface CreateServiceOrderDTO {
 5. **Pessoa E (Frontend Admin):** dashboard admin, CRUDs, estoque/financeiro
 
 Todos colaboram em testes manuais integrados e refinamento final.
-
----
-
-## 16) Cronograma de 14 dias
-
-- **Dias 1-2:** setup projeto, auth base, estrutura, banco e estratégia de consistência de estoque
-- **Dias 3-5:** clientes/veículos + telas base
-- **Dias 6-8:** ordens de serviço + fluxo de status
-- **Dias 9-10:** estoque + vínculo materiais/custos
-- **Dias 11-12:** financeiro básico + histórico
-- **Dia 13:** testes integrados, correções, polimento UI
-- **Dia 14:** preparação demo/apresentação
 
 ---
 
