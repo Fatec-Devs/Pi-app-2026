@@ -1,23 +1,27 @@
 {
-  "expo": "50.0.0",
-  "name": "pi-app-frontend",
-  "slug": "pi-app-frontend",
-  "version": "1.0.0",
-  "assetBundlePatterns": ["**/*"],
-  "plugins": [],
-  "platforms": ["ios", "android", "web"],
-  "android": {
-    "versionCode": 1,
-    "adaptiveIcon": {
-      "foregroundImage": "./assets/adaptive-icon.png",
-      "backgroundColor": "#ffffff"
-    }
-  },
-  "ios": {
-    "supportsTabletMode": true
-  },
-  "web": {
-    "favicon": "./assets/favicon.png"
-  },
-  "scheme": "pi-app"
+  "expo": {
+    "name": "pi-app-frontend",
+    "slug": "pi-app-frontend",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "ios": {},
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "pi-app"
+  }
 }

@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, LoginDTO } from '@types/index';
+import { User } from 'index';
+import type { LoginDTO } from '@types/index';
 import apiService from '@services/api';
+import { mockUsers } from '@services/mockData';
 
 interface AuthContextType {
   user: User | null;
@@ -40,6 +42,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (credentials: LoginDTO): Promise<void> => {
     try {
       setIsLoading(true);
+
+      const demoUser = Object.values(mockUsers).find(
+        (user) => user.email === credentials.email,
+      );
+
+      if (demoUser) {
+        apiService.setAccessToken(`mock-${demoUser.id}`);
+        setUser(demoUser);
+        return;
+      }
+
       const response = await apiService.login(credentials);
 
       if (response.success && response.data) {

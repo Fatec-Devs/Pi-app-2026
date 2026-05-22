@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ServiceOrder } from '@types/index';
-import { StatusBadge } from './StatusBadge';
+import { StatusBadge } from '@components/common/StatusBadge';
 
 interface ServiceOrderCardProps {
   order: ServiceOrder;

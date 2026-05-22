@@ -1,12 +1,9 @@
 import React from 'react';
 import {
   NavigationContainer,
-  NavigationProp,
-  RouteProp,
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useAuth } from '@contexts/AuthContext';
 
 // Screens
@@ -16,7 +13,6 @@ import { AdminDashboardScreen } from '@screens/admin/DashboardScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
 
 // Client Navigator
 const ClientNavigator: React.FC = () => {
@@ -51,9 +47,8 @@ const ClientNavigator: React.FC = () => {
 // Admin Navigator
 const AdminNavigator: React.FC = () => {
   return (
-    <Drawer.Navigator
+    <Stack.Navigator
       screenOptions={{
-        drawerActiveTintColor: '#007AFF',
         headerStyle: {
           backgroundColor: '#333333',
         },
@@ -63,16 +58,15 @@ const AdminNavigator: React.FC = () => {
         },
       }}
     >
-      <Drawer.Screen
+      <Stack.Screen
         name="Dashboard"
         component={AdminDashboardScreen}
         options={{
           title: 'Dashboard',
-          drawerLabel: 'Dashboard',
         }}
       />
       {/* Add more admin screens here */}
-    </Drawer.Navigator>
+    </Stack.Navigator>
   );
 };
 
