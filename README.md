@@ -180,14 +180,14 @@ export interface CreateServiceOrderDTO {
 2. Toda OS deve possuir ao menos um serviço.
 3. Estoque atualizado automaticamente no registro de materiais.
 4. Bloquear material sem estoque suficiente.
-5. OS só pode ser `CONCLUIDO` se `laborCost`/`partsCost`/`totalCost` estiverem registrados (`totalCost >= 0`; OS de garantia pode ter custo zero).
+5. OS só pode ser `CONCLUIDO` se `laborCost`/`partsCost`/`totalCost` estiverem registrados e não-negativos (`laborCost >= 0`, `partsCost >= 0`, `totalCost >= 0`; OS de garantia pode ter custo zero).
 6. Fluxo obrigatório de status:
    - `ORCAMENTO` → `APROVADO` → `EM_EXECUCAO` → `CONCLUIDO`
 7. Estratégia de registro de materiais + baixa de estoque (definida nos Dias 1-2):
    - **A (preferencial):** transação atômica com MongoDB replica set.
    - **B (MVP):** compensação manual (reverter material da OS se falhar baixa de estoque), com migração planejada para transaction.
    - Escolha rápida: usar **A** se a equipe já dominar replica set no início; usar **B** para acelerar entrega do MVP com menor risco operacional.
-   - Em falha de baixa no cenário **B**: não confirmar consumo de material e registrar evento de erro na OS (ex.: `pending_stock_adjustment`) para correção manual.
+   - Em falha de baixa no cenário **B**: não confirmar consumo de material, registrar evento de erro na OS (ex.: `pending_stock_adjustment`) e enviar para fila de reconciliação com ação do admin (retry/reversão).
 
 ---
 
@@ -242,7 +242,7 @@ export interface CreateServiceOrderDTO {
 - Commits curtos e semânticos (`feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `style`)
 - DTOs para entrada e saída
 - Nunca acessar Mongo direto no Controller
-- Hash de senha com `bcrypt` usando `BCRYPT_SALT_ROUNDS` (default: 10, faixa segura: 10-12)
+- Hash de senha com `bcrypt` usando `BCRYPT_SALT_ROUNDS` (default recomendado: 12; usar 10 no MVP apenas se houver limitação de desempenho)
 - Definir `BCRYPT_SALT_ROUNDS` em `.env` e mapear no `config/auth.ts`
 - Aplicar hash no **Auth Service** (não em controller/repository)
 - Nunca armazenar senha em texto puro
