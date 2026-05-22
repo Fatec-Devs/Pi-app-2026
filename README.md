@@ -184,6 +184,7 @@ export interface CreateServiceOrderDTO {
 6. Fluxo obrigatório de status:
    - `ORCAMENTO` → `APROVADO` → `EM_EXECUCAO` → `CONCLUIDO`
 7. Só iniciar execução após aprovação do orçamento.
+8. Registro de materiais + baixa de estoque deve ocorrer em transação atômica (MongoDB session/transaction); em falha, rollback completo da operação.
 
 ---
 
@@ -238,6 +239,7 @@ export interface CreateServiceOrderDTO {
 - Commits curtos e semânticos (`feat`, `fix`, `refactor`, `docs`)
 - DTOs para entrada e saída
 - Nunca acessar Mongo direto no Controller
+- Senhas sempre com hash seguro (`bcrypt`) + salt (`saltRounds` configurável via ambiente), nunca armazenar senha em texto puro
 - Erros padronizados (`code`, `message`, `details`)
 - Nomes consistentes:
   - `camelCase` (variáveis/funções)
