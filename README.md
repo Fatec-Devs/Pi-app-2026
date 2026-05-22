@@ -73,22 +73,22 @@ Objetivo: arquitetura simples, profissional, escalável e rápida para equipe ac
 
 ## 4) Domínio e Models (MongoDB/Mongoose)
 
-## `User`
+### `User`
 - `name`, `email`, `passwordHash`, `role` (`ADMIN | CLIENT`), `phone`, `active`
 
-## `Client`
+### `Client`
 - `userId`, `document`, `address`, `notes`
 
-## `Vehicle`
+### `Vehicle`
 - `clientId`, `plate`, `brand`, `model`, `year`, `color`, `mileage`
 
-## `ServiceOrder`
+### `ServiceOrder`
 - `clientId`, `vehicleId`, `status`, `services[]`, `materials[]`, `laborCost`, `partsCost`, `totalCost`, `approvedAt`, `startedAt`, `finishedAt`
 
-## `InventoryItem`
+### `InventoryItem`
 - `name`, `sku`, `unit`, `quantity`, `minStock`, `unitCost`, `active`
 
-## `FinancialEntry`
+### `FinancialEntry`
 - `serviceOrderId`, `type` (`INCOME | EXPENSE`), `description`, `amount`, `date`, `category`
 
 ---
@@ -123,26 +123,26 @@ export interface CreateServiceOrderDTO {
 
 ## 6) Rotas REST (padrão profissional)
 
-## Auth
+### Auth
 - `POST /auth/login`
 - `POST /auth/register-client`
 - `GET /auth/me`
 
-## Clientes
+### Clientes
 - `GET /clients`
 - `GET /clients/:id`
 - `POST /clients`
 - `PUT /clients/:id`
 - `DELETE /clients/:id`
 
-## Veículos
+### Veículos
 - `GET /vehicles`
 - `GET /vehicles/:id`
 - `POST /vehicles`
 - `PUT /vehicles/:id`
 - `DELETE /vehicles/:id`
 
-## Ordens de Serviço
+### Ordens de Serviço
 - `GET /service-orders`
 - `GET /service-orders/:id`
 - `POST /service-orders`
@@ -151,13 +151,13 @@ export interface CreateServiceOrderDTO {
 - `PATCH /service-orders/:id/costs`
 - `GET /service-orders/client/:clientId/history`
 
-## Estoque
+### Estoque
 - `GET /inventory`
 - `POST /inventory`
 - `PUT /inventory/:id`
 - `PATCH /inventory/:id/adjust`
 
-## Financeiro
+### Financeiro
 - `GET /finance/summary`
 - `GET /finance/entries`
 - `POST /finance/entries`
@@ -199,7 +199,7 @@ export interface CreateServiceOrderDTO {
 
 ## 10) Fluxo de telas
 
-## Cliente
+### Cliente
 - Login
 - Home Cliente (resumo)
 - Solicitar Serviço
@@ -207,7 +207,7 @@ export interface CreateServiceOrderDTO {
 - Detalhe da OS (status timeline)
 - Histórico
 
-## Admin
+### Admin
 - Login
 - Dashboard Admin
 - Clientes (CRUD)
